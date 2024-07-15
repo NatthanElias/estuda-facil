@@ -7,4 +7,3 @@ const rotas = new Router();
 rotas.use(rotasCategorias);
 
 module.exports = rotas;
-
