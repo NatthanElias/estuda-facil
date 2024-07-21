@@ -16,10 +16,22 @@ const getCardsDB = async () => {
 const addCardDB = async (body) => {
     try {
         const { pergunta, resposta, deck_id } = body;
+
+        if (!deck_id) {
+            throw "ID do Deck não informado";
+        }
+
+        const deck = await pool.query('SELECT * FROM decks WHERE codigo = $1', [deck_id]);
+
+        if (deck.rowCount === 0) {
+            throw "ID do Deck inválido";
+        }
+
         const results = await pool.query(`INSERT INTO cards (pergunta, resposta, deck_id) 
                                           VALUES ($1, $2, $3)
                                           RETURNING codigo, pergunta, resposta, deck_id`,
                                           [pergunta, resposta, deck_id]);
+
         const card = results.rows[0];
         return new Card(card.codigo, card.pergunta, card.resposta, card.deck_id, "");
     } catch (err) {

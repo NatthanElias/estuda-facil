@@ -3,6 +3,7 @@ import DeckContext from './DeckContext';
 import { getDecksAPI, getDeckPorCodigoAPI, deleteDeckPorCodigoAPI, cadastraDeckAPI } from '../../../services/DeckServico';
 import Tabela from "./Tabela";
 import Form from "./Form";
+import Carregando from '../../common/Carregando';
 
 function Deck() {
 
@@ -12,7 +13,6 @@ function Deck() {
     const [objeto, setObjeto] = useState({
         codigo: "", nome: "", descricao: ""
     });
-    const [carregando, setCarregando] = useState(true);
 
     const novoObjeto = () => {
         setEditar(false);
@@ -53,8 +53,12 @@ function Deck() {
         setObjeto({ ...objeto, [name]: value });
     }
 
+    const [carregando, setCarregando] = useState(true);
+
     const recuperaDecks = async () => {
+        setCarregando(true);
         setListaObjetos(await getDecksAPI());
+        setCarregando(false);
     }
 
     const remover = async codigo => {
@@ -81,7 +85,9 @@ function Deck() {
                 handleChange, novoObjeto, editarObjeto
             }
         }>
-            <Tabela />
+            <Carregando carregando={carregando}>
+                <Tabela />  
+            </Carregando>
             <Form />
         </DeckContext.Provider>
     );

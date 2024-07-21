@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import Menu from './components/Menu'
 import Home from './components/telas/Home'
 import Deck from './components/telas/decks/Deck'
+import Card from './components/telas/cards/Card'
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path : "/decks",
-        element : <Deck/>
+        element : <Deck />
+      },
+      {
+        path : "/cards",
+        element : <Card />
       }      
     ]
   }
