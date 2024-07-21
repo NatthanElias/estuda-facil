@@ -2,12 +2,56 @@ import { useState, useEffect } from 'react';
 import DeckContext from './DeckContext';
 import { getDecksAPI, getDeckPorCodigoAPI, deleteDeckPorCodigoAPI, cadastraDeckAPI } from '../../../services/DeckServico';
 import Tabela from "./Tabela";
-//import Form from "./Form";
+import Form from "./Form";
 
 function Deck() {
 
     const [alerta, setAlerta] = useState({ status: "", message: "" });
     const [listaObjetos, setListaObjetos] = useState([]);
+    const [editar, setEditar] = useState(false);
+    const [objeto, setObjeto] = useState({
+        codigo: "", nome: "", descricao: ""
+    });
+    const [carregando, setCarregando] = useState(true);
+
+    const novoObjeto = () => {
+        setEditar(false);
+        setAlerta({ status: "", message: "" });
+        setObjeto({
+            codigo: 0,
+            nome: "",
+            descricao: ""
+        });
+    }
+
+    const editarObjeto = async codigo => {
+        setObjeto(await getDeckPorCodigoAPI(codigo))
+        setEditar(true);
+        setAlerta({ status: "", message: "" });
+    }
+    
+    const acaoCadastrar = async e => {
+        e.preventDefault();
+        const metodo = editar ? "PUT" : "POST";
+        try {
+            let retornoAPI = await cadastraDeckAPI(objeto, metodo);
+            setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
+            setObjeto(retornoAPI.objeto);
+            if (!editar) {
+                setEditar(true);
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+
+        recuperaDecks();
+    }
+
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setObjeto({ ...objeto, [name]: value });
+    }
 
     const recuperaDecks = async () => {
         setListaObjetos(await getDecksAPI());
@@ -30,10 +74,15 @@ function Deck() {
             {
                 alerta, setAlerta,
                 listaObjetos,
-                remover
+                remover,
+                objeto,
+                editar,
+                acaoCadastrar,
+                handleChange, novoObjeto, editarObjeto
             }
         }>
-            <Tabela/>
+            <Tabela />
+            <Form />
         </DeckContext.Provider>
     );
 }
