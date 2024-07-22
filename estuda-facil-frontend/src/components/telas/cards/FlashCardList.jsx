@@ -9,7 +9,7 @@ function FlashCardList() {
         <div style={{ padding: '20px' }}>
             <h1>Flash Cards</h1>
             <Alerta alerta={alerta} />
-            <button type="button" className="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalEdicao" onClick={() => novoObjeto()}>
+            <button type="button" className="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalEdicao" onClick={() => novoObjeto()}>
                 Novo <i className="bi bi-file-earmark-plus"></i>
             </button>
             {listaObjetos.length === 0 &&
@@ -27,7 +27,7 @@ function FlashCardList() {
                                 <div className="card-footer bg-transparent border-success">
                                     <button
                                         type="button"
-                                        className="btn btn-warning m-1"
+                                        className="btn btn-info m-1"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalEdicao"
                                         onClick={() => editarObjeto(objeto.codigo)}

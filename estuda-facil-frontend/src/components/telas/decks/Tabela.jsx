@@ -10,7 +10,7 @@ function Tabela() {
         <div style={{ padding: '20px' }}>
             <h1>Decks</h1>
             <Alerta alerta={alerta} />
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalEdicao"
+            <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEdicao"
                 onClick={() => novoObjeto()}>
                 Novo <i className="bi bi-file-earmark-plus"></i>
             </button>
