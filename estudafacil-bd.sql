@@ -29,3 +29,17 @@ VALUES
 select * from decks
 
 select * from cards
+
+create table usuarios (
+	email varchar(50) not null,
+	apelido varchar(20) not null primary key,
+	senha varchar(20) not null, 
+	tipo char(1)  not null, 
+	check (tipo = 'A' or tipo = 'U'),
+	telefone varchar(14)  not null, 
+	nome varchar(50) not null
+);
+
+insert into usuarios (email, apelido, senha, tipo, telefone, nome) 
+values ('natthansantos@ifsul.edu.br', 'Nate', '1234', 'A','(54)99984-4348','Natthan Elias'), 
+('joao@ifsul.edu.br', 'Jao','123456', 'U','(54)44484-4348','Joao');
